@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SensorMangement-CodingBlocks</string>
+    <string name="proximity_indicator">Proximity Indiacator</string>
+    <string name="accelerometer_indicator">Accelerometer Indicator</string>
 </resources>
