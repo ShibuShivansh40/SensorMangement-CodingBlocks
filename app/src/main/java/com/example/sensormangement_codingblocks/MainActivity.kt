@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     lateinit var sensorEventListener: SensorEventListener
     lateinit var sensorManager : SensorManager
     lateinit var proxSensor: Sensor
+    lateinit var accelSensor: Sensor
 
     val colors = arrayOf(Color.BLACK, Color.GRAY, Color.MAGENTA, Color.DKGRAY, Color.CYAN, Color.BLUE, Color.RED, Color.GREEN, Color.TRANSPARENT, Color.WHITE )
     override fun onSensorChanged(event: SensorEvent?) {
@@ -28,12 +29,20 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 //                    onSensorChanged: ${event!!.values[0]}
 //                """.trimIndent()
 //        )
+//        if(event!!.values[0] > 0){
+//            val proxyIndicator = findViewById<FrameLayout>(R.id.proxyIndicator)
+//            proxyIndicator.setBackgroundColor(colors[Random.nextInt(10)])
+//            // Here it will change the background color of the FrameLayout for ProxyIndicator whenever tbere is a chhange in the Sensor Value
+//        }
 
-        if(event!!.values[0] > 0){
-            val proxyIndicator = findViewById<FrameLayout>(R.id.proxyIndicator)
-            proxyIndicator.setBackgroundColor(colors[Random.nextInt(10)])
-            // Here it will change the background color of the FrameLayout for ProxyIndicator whenever tbere is a chhange in the Sensor Value
-        }
+        Log.d("SENSOR_CHANGED_ACCEL" , """
+            ---
+            ax = ${event!!.values[0]}
+            ay = ${event!!.values[1]}
+            az = ${event!!.values[2]}
+            ---
+        """.trimIndent())
+
 
     }
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
@@ -58,12 +67,17 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 //        }
 
 //        How to detect change in the Proximity Sensor?
-        proxSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY)
+//        proxSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY)
+//        How to detect change in the Accelerometer Sensor?
+        accelSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         }
     override fun onResume() {
         super.onResume()
-        proxSensor.also{
-            sensorManager.registerListener(this, proxSensor, 1000*1000)
+//        proxSensor.also{
+//            sensorManager.registerListener(this, proxSensor, 1000*1000)
+//        }
+        accelSensor.also{
+            sensorManager.registerListener(this, accelSensor, 1000*1000)
         }
         //every one second
     }
